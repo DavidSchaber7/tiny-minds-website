@@ -228,16 +228,41 @@
     }
     .premium h2 { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
     .premium p { font-size: 18px; opacity: 0.9; margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .price-tags {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
     .price-tag {
       display: inline-block;
       background: rgba(255,255,255,0.2);
       backdrop-filter: blur(10px);
-      padding: 20px 40px;
+      padding: 20px 32px;
       border-radius: 20px;
-      margin-bottom: 28px;
+      position: relative;
     }
-    .price-tag .amount { font-size: 42px; font-weight: 800; }
-    .price-tag .period { font-size: 16px; opacity: 0.8; }
+    .price-tag.popular {
+      background: rgba(255,255,255,0.35);
+      border: 2px solid rgba(255,255,255,0.5);
+    }
+    .price-tag .badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 10px;
+      white-space: nowrap;
+    }
+    .price-tag .amount { font-size: 36px; font-weight: 800; }
+    .price-tag .period { font-size: 15px; opacity: 0.8; }
+    .price-tag .save { display: block; font-size: 13px; opacity: 0.85; margin-top: 4px; font-weight: 700; }
     .premium-features {
       display: flex;
       gap: 32px;
@@ -479,9 +504,17 @@
   <section class="premium" id="premium-section">
     <h2>TinyMinds Premium ✨</h2>
     <p>Hol das Beste aus TinyMinds heraus. Unbegrenzt, persönlich, intelligent.</p>
-    <div class="price-tag">
-      <span class="amount">4,99€</span>
-      <span class="period">/Monat</span>
+    <div class="price-tags">
+      <div class="price-tag">
+        <span class="amount">4,99€</span>
+        <span class="period">/Monat</span>
+      </div>
+      <div class="price-tag popular">
+        <span class="badge">Spare 33%</span>
+        <span class="amount">39,99€</span>
+        <span class="period">/Jahr</span>
+        <span class="save">nur 3,33€/Monat</span>
+      </div>
     </div>
     <div class="premium-features">
       <div class="premium-feature">✅ Unbegrenzter KI-Chat</div>

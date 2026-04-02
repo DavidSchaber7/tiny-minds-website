@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Datenschutz – TinyMinds</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary: #E8816E; --primary-dark: #D46B58; --cream: #FFF9F0; --text: #2D2D2D; --text-secondary: #6B6B6B; --text-light: #999; --surface: #FFFFFF; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Nunito', -apple-system, sans-serif; background: var(--cream); color: var(--text); line-height: 1.6; }
+    nav { position: fixed; top: 0; width: 100%; background: rgba(255,249,240,0.92); backdrop-filter: blur(20px); z-index: 100; border-bottom: 1px solid rgba(0,0,0,0.06); }
+    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 22px; font-weight: 800; color: var(--primary); text-decoration: none; }
+    .nav-back { text-decoration: none; color: var(--text-secondary); font-weight: 600; font-size: 15px; }
+    .nav-back:hover { color: var(--primary); }
+    .legal { padding: 100px 24px 80px; max-width: 780px; margin: 0 auto; }
+    .legal h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; color: var(--primary); }
+    .legal-intro { font-size: 16px; color: var(--text-secondary); margin-bottom: 32px; }
+    .legal h3 { font-size: 17px; font-weight: 700; margin: 28px 0 8px; color: var(--text); }
+    .legal p, .legal li { font-size: 15px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 8px; }
+    .legal ul { padding-left: 20px; margin-bottom: 12px; }
+    .legal a { color: var(--primary); }
+    footer { padding: 40px 24px; text-align: center; border-top: 1px solid rgba(0,0,0,0.06); }
+    .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 600; }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-copy { font-size: 13px; color: var(--text-light); }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="logo">TinyMinds</a>
+      <a href="/" class="nav-back">Startseite</a>
+    </div>
+  </nav>
+
+  <section class="legal">
+    <h2>Datenschutz</h2>
+    <p class="legal-intro">Deine Privatsphäre ist uns wichtig. TinyMinds ist auf minimale Datenerhebung ausgelegt.</p>
+
+    <h3>1. Verantwortliche Stelle</h3>
+    <p>Dasc Interactive<br>Inhaber: David Schaber<br>Hanfweg 4<br>77977 Rust<br><a href="mailto:hello@tiny-minds.de">hello@tiny-minds.de</a></p>
+
+    <h3>2. Welche Daten wir erheben</h3>
+    <ul>
+      <li>Kontodaten: E-Mail-Adresse, Name (bei Google/Apple Login)</li>
+      <li>Kindprofil: Vorname, Geburtsdatum, Geschlecht</li>
+      <li>Tracker-Daten: Schlaf-, Ess- und Wachstumseinträge</li>
+      <li>Meilensteine: Entwicklungsfortschritte deines Kindes</li>
+      <li>Chat-Verlauf: Nachrichten an den KI-Chatbot Mia</li>
+      <li>Einstellungen: App-Präferenzen</li>
+    </ul>
+
+    <h3>3. Rechtsgrundlage</h3>
+    <ul>
+      <li>Art. 6 Abs. 1 lit. a DSGVO (Einwilligung) – Registrierung</li>
+      <li>Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung) – App-Funktionen</li>
+      <li>Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse) – Sicherheit</li>
+    </ul>
+
+    <h3>4. Datenspeicherung</h3>
+    <p>Deine Daten werden lokal auf deinem Gerät und in der Cloud bei Supabase (EU-Server) gespeichert. Die Übertragung erfolgt verschlüsselt über HTTPS. Deine Daten sind durch Row Level Security geschützt — nur du hast Zugriff auf deine eigenen Daten.</p>
+
+    <h3>5. Authentifizierung</h3>
+    <p>Anmeldung über E-Mail/Passwort, Google Sign-In oder Apple Sign-In. Bei Google/Apple werden nur Name und E-Mail übermittelt. Passwörter werden nie von uns gespeichert.</p>
+
+    <h3>6. KI-Chat (Mia)</h3>
+    <p>Nachrichten an Mia werden über Supabase Edge Functions an die Anthropic API weitergeleitet. Deine Nachrichten werden nicht zum KI-Training verwendet (API-Nutzung, siehe anthropic.com/privacy). Sende keine sensiblen persönlichen Daten im Chat.</p>
+
+    <h3>7. Keine Werbung, kein Tracking</h3>
+    <p>TinyMinds enthält keine Werbung, kein Analytics-Tracking, keine Cookies (außer Auth), kein Fingerprinting und keine Datenweitergabe an Dritte zu Werbezwecken.</p>
+
+    <h3>8. Datenaufbewahrung</h3>
+    <p>Daten werden gespeichert, solange dein Konto aktiv ist. Bei Löschung werden alle Daten innerhalb von 30 Tagen vollständig aus unseren Systemen entfernt.</p>
+
+    <h3>9. Deine Rechte (DSGVO)</h3>
+    <ul>
+      <li>Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17)</li>
+      <li>Einschränkung (Art. 18), Datenübertragbarkeit (Art. 20)</li>
+      <li>Widerspruch (Art. 21), Widerruf der Einwilligung</li>
+    </ul>
+    <p>Kontakt: <a href="mailto:hello@tiny-minds.de">hello@tiny-minds.de</a></p>
+
+    <h3>10. Datenlöschung</h3>
+    <p>Einzelne Einträge direkt in der App. Gesamtes Konto über die Einstellungen oder per E-Mail. Lokale Daten durch Deinstallation der App.</p>
+
+    <h3>11. Datensicherheit</h3>
+    <p>TLS/HTTPS-Verschlüsselung, Row Level Security, OAuth 2.0, regelmäßige Sicherheitsupdates, keine Speicherung von Passwörtern im Klartext.</p>
+
+    <h3>12. Beschwerderecht</h3>
+    <p>Du hast das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren.</p>
+
+    <h3>13. KI-Transparenz (EU AI Act)</h3>
+    <p>Mia basiert auf dem KI-Sprachmodell Claude von Anthropic. Mia ist ein KI-System, keine echte Person. Antworten sind maschinell generiert. Mia gibt keine medizinischen Diagnosen oder Behandlungsempfehlungen.</p>
+  </section>
+
+  <footer>
+    <div class="footer-links">
+      <a href="/datenschutz.html">Datenschutz</a>
+      <a href="/nutzungsbedingungen.html">Nutzungsbedingungen</a>
+      <a href="/impressum.html">Impressum</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 Dasc Interactive. Alle Rechte vorbehalten.</p>
+  </footer>
+</body>
+</html>

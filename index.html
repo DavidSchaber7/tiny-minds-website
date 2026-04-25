@@ -3,250 +3,531 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TinyMinds – Dein smarter Eltern-Begleiter</title>
-  <meta name="description" content="TinyMinds begleitet dich durch die ersten Jahre mit deinem Kind. KI-Chat, Schlaf-Tracker, Meilensteine & mehr.">
-  <meta property="og:title" content="TinyMinds – Dein smarter Eltern-Begleiter">
-  <meta property="og:description" content="Die All-in-One App für junge Eltern. KI-Beratung, Tracker, Meilensteine, U-Untersuchungen & Impfplan.">
+  <title>TinyMinds — Dein warmer Begleiter für die ersten Jahre</title>
+  <meta name="description" content="Die warme, freundliche Begleit-App für die ersten Jahre mit deinem Kind. Schlaf, Mahlzeiten, Meilensteine, KI-Chat mit Mia — alles an einem sonnigen Ort.">
+  <meta property="og:title" content="TinyMinds — Dein warmer Begleiter für die ersten Jahre">
+  <meta property="og:description" content="Schlaf, Mahlzeiten, Meilensteine und eine KI, die nie schläft. TinyMinds begleitet dich durch die ersten Jahre.">
   <meta property="og:type" content="website">
+  <link rel="icon" href="icon.png" type="image/png">
+
   <style>
+    /* ─── Self-hosted fonts (DSGVO-konform) ─── */
+    @font-face {
+      font-family: 'Fraunces';
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: swap;
+      src: url('fonts/Fraunces-Variable.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Instrument Serif';
+      font-style: italic;
+      font-weight: 400;
+      font-display: swap;
+      src: url('fonts/InstrumentSerif-Italic.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Instrument Serif';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('fonts/InstrumentSerif-Regular.woff2') format('woff2');
+    }
     @font-face { font-family: 'Nunito'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/Nunito-Regular.ttf') format('truetype'); }
     @font-face { font-family: 'Nunito'; font-style: normal; font-weight: 600; font-display: swap; src: url('fonts/Nunito-SemiBold.ttf') format('truetype'); }
     @font-face { font-family: 'Nunito'; font-style: normal; font-weight: 700; font-display: swap; src: url('fonts/Nunito-Bold.ttf') format('truetype'); }
     @font-face { font-family: 'Nunito'; font-style: normal; font-weight: 800; font-display: swap; src: url('fonts/Nunito-ExtraBold.ttf') format('truetype'); }
+
     :root {
-      --primary: #E8816E;
-      --primary-dark: #D46B58;
-      --cream: #FFF9F0;
-      --cream-dark: #FFF0E0;
-      --text: #2D2D2D;
-      --text-secondary: #6B6B6B;
-      --text-light: #999;
-      --surface: #FFFFFF;
-      --green: #7BC67E;
-      --orange-light: rgba(232,129,110,0.1);
+      /* ─── Dawn Palette — warm & hopeful ─── */
+      --cream:         #FDF7EE;
+      --cream-dark:    #F6EDDD;
+      --paper-raised:  #FFFDF8;
+      --surface:       #FFFFFF;
+      --ink:           #2A2420;
+      --ink-soft:      #5A4E45;
+      --graphite:      #8A7C71;
+      --pencil:        #B5A89D;
+      --border:        #EFE3D1;
+
+      --coral:         #EE7F5F;
+      --coral-dark:    #D1664C;
+      --peach:         #FFB894;
+      --peach-light:   #FFE8DC;
+      --lavender:      #B4A3DE;
+      --lavender-lt:   #E8DFFB;
+      --sage:          #7DB89A;
+      --sage-light:    #DDEDE4;
+      --butter:        #FFE5A8;
+      --sky:           #AECFE5;
+      --sky-light:     #DFE9F2;
+      --rose:          #D4A8C8;
+
+      --font-display:  'Fraunces', Georgia, 'Times New Roman', serif;
+      --font-accent:   'Instrument Serif', Georgia, serif;
+      --font-body:     'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--cream);
-      color: var(--text);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 16px;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
+
+    /* ─── Atmospheric blobs ─── */
+    .atmosphere {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.6;
+    }
+    .blob-1 { top: -10%; right: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, var(--peach) 0%, transparent 70%); }
+    .blob-2 { top: 40%; left: -15%; width: 50vw; height: 50vw; background: radial-gradient(circle, var(--lavender) 0%, transparent 70%); opacity: 0.4; }
+    .blob-3 { bottom: -10%; right: -5%; width: 50vw; height: 50vw; background: radial-gradient(circle, var(--sage) 0%, transparent 70%); opacity: 0.35; }
+
+    main, nav, footer { position: relative; z-index: 2; }
 
     /* ─── NAV ─── */
     nav {
       position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(255,249,240,0.92);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      z-index: 100;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-    }
-    .nav-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 14px 24px;
+      top: 0; left: 0; right: 0;
+      padding: 16px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      z-index: 50;
+      background: rgba(253, 247, 238, 0.78);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(239, 227, 209, 0.5);
     }
-    .logo {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--primary);
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .wordmark {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--coral);
+      letter-spacing: -0.02em;
       text-decoration: none;
     }
-    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
     .nav-links a {
-      text-decoration: none;
-      color: var(--text-secondary);
-      font-weight: 600;
       font-size: 15px;
-      transition: color 0.2s;
+      font-weight: 600;
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: color .2s;
     }
-    .nav-links a:hover { color: var(--primary); }
+    .nav-links a:hover { color: var(--coral); }
     .btn-nav {
-      background: var(--primary);
+      background: var(--coral);
       color: #fff !important;
-      padding: 8px 20px;
-      border-radius: 20px;
-      font-size: 14px !important;
+      padding: 10px 20px;
+      border-radius: 100px;
+      font-weight: 700 !important;
+      box-shadow: 0 4px 14px rgba(238,127,95,0.28);
+      transition: all .25s;
     }
-    .btn-nav:hover { background: var(--primary-dark); }
+    .btn-nav:hover { background: var(--coral-dark) !important; transform: translateY(-1px); }
+
+    .menu-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .menu-toggle span { display: block; width: 24px; height: 2px; background: var(--ink); margin: 5px 0; border-radius: 2px; transition: 0.3s; }
 
     /* ─── HERO ─── */
     .hero {
-      padding: 140px 24px 80px;
-      text-align: center;
-      max-width: 900px;
+      min-height: 90vh;
+      padding: 140px 32px 60px;
+      max-width: 1200px;
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      position: relative;
     }
+
     .hero-badge {
-      display: inline-block;
-      background: var(--orange-light);
-      color: var(--primary);
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-    .hero h1 {
-      font-size: clamp(36px, 6vw, 56px);
-      font-weight: 800;
-      line-height: 1.15;
-      margin-bottom: 20px;
-      color: var(--text);
-    }
-    .hero h1 span { color: var(--primary); }
-    .hero p {
-      font-size: 19px;
-      color: var(--text-secondary);
-      max-width: 560px;
-      margin: 0 auto 36px;
-      line-height: 1.7;
-    }
-    .hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    .btn-primary {
-      background: var(--primary);
-      color: #fff;
-      padding: 14px 32px;
-      border-radius: 28px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 16px;
-      transition: all 0.2s;
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      padding: 8px 16px;
+      background: rgba(255, 184, 148, 0.25);
+      border: 1px solid rgba(238, 127, 95, 0.2);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--coral-dark);
+      align-self: center;
+      margin-bottom: 28px;
     }
-    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,129,110,0.3); }
-    .btn-secondary {
-      background: var(--surface);
-      color: var(--text);
-      padding: 14px 32px;
-      border-radius: 28px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 16px;
-      border: 2px solid #eee;
-      transition: all 0.2s;
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--coral);
+      box-shadow: 0 0 0 3px rgba(238,127,95,0.2);
     }
-    .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
 
-    /* ─── SCREENSHOT CAROUSEL ─── */
-    .screenshots {
-      padding: 40px 24px 80px;
+    .hero h1 {
+      font-family: var(--font-display);
+      font-variation-settings: 'opsz' 144;
+      font-weight: 700;
+      font-size: clamp(44px, 7.5vw, 96px);
+      line-height: 1.0;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      max-width: 14ch;
+      margin: 0 auto 28px;
+    }
+    .hero h1 .script {
+      font-family: var(--font-accent);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--coral);
+      display: inline-block;
+    }
+
+    .hero-lede {
+      font-size: 19px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 580px;
+      margin: 0 auto 40px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--coral);
+      color: #fff;
+      padding: 16px 28px;
+      border-radius: 100px;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(238,127,95,0.35);
+      transition: all .3s cubic-bezier(.2,.8,.2,1);
+    }
+    .btn-primary:hover {
+      background: var(--coral-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(238,127,95,0.4);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      padding: 16px 22px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .25s;
+    }
+    .btn-ghost::after { content: '→'; transition: transform .3s; }
+    .btn-ghost:hover { color: var(--coral); }
+    .btn-ghost:hover::after { transform: translateX(4px); }
+
+    /* Floating illustrations around hero */
+    .hero-illo {
+      position: absolute;
+      pointer-events: none;
+      animation: float 6s ease-in-out infinite;
+      z-index: 0;
+    }
+    .hero-illo.sun { top: 18%; right: 8%; width: 80px; height: 80px; }
+    .hero-illo.cloud { top: 38%; left: 6%; width: 70px; height: 40px; animation-delay: -2s; }
+    .hero-illo.heart { bottom: 22%; right: 12%; width: 50px; height: 50px; animation-delay: -4s; }
+    .hero-illo.sparkle { top: 16%; left: 12%; width: 30px; height: 30px; animation-delay: -1s; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* ─── SCREENSHOTS SHOWCASE ─── */
+    .showcase {
+      padding: 40px 0 120px;
       overflow: hidden;
     }
-    .screenshots-track {
+    .showcase-track {
       display: flex;
-      gap: 24px;
-      justify-content: center;
-      flex-wrap: nowrap;
+      gap: 32px;
+      padding: 20px 32px 40px;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
-      padding: 0 24px 20px;
     }
-    .screenshots-track::-webkit-scrollbar { display: none; }
-    .screenshot-item {
+    .showcase-track::-webkit-scrollbar { display: none; }
+    .showcase-track { scrollbar-width: none; }
+    .shot {
       flex: 0 0 auto;
-      width: 220px;
+      width: clamp(240px, 28vw, 340px);
+      aspect-ratio: 9 / 19.5;
+      border-radius: 36px;
+      overflow: hidden;
       scroll-snap-align: center;
+      box-shadow: 0 24px 60px rgba(58, 40, 32, 0.18), 0 8px 20px rgba(58, 40, 32, 0.10);
+      transition: transform .4s cubic-bezier(.2,.8,.2,1);
     }
-    .screenshot-item img {
+    .shot:hover { transform: translateY(-6px); }
+    .shot img {
       width: 100%;
-      border-radius: 24px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
-    .screenshot-label {
-      text-align: center;
-      margin-top: 12px;
-      font-weight: 700;
-      font-size: 14px;
-      color: var(--text-secondary);
+    .showcase-track::before, .showcase-track::after {
+      content: '';
+      flex: 0 0 max(0px, calc((100vw - 1136px) / 2));
     }
 
-    /* ─── FEATURES ─── */
-    .features {
-      padding: 80px 24px;
-      max-width: 1100px;
-      margin: 0 auto;
+    /* ─── BENTO FEATURES ─── */
+    .bento-wrap {
+      padding: 60px 0;
     }
-    .section-title {
-      text-align: center;
-      font-size: 32px;
-      font-weight: 800;
+    .bento {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-auto-rows: minmax(200px, auto);
+      gap: 20px;
+    }
+
+    .tile {
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(138,124,107,0.08);
+      transition: all .4s cubic-bezier(.2,.8,.2,1);
+    }
+    .tile:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(138,124,107,0.14);
+    }
+
+    .tile-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--pencil);
       margin-bottom: 12px;
     }
-    .section-subtitle {
-      text-align: center;
-      font-size: 17px;
-      color: var(--text-secondary);
-      margin-bottom: 56px;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
+    .tile h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 14px;
     }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
+    .tile h3 .accent {
+      font-family: var(--font-accent);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--coral);
     }
-    .feature-card {
-      background: var(--surface);
-      border-radius: 20px;
-      padding: 32px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-      transition: transform 0.2s, box-shadow 0.2s;
+    .tile p {
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--ink-soft);
     }
-    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
-    .feature-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      margin-bottom: 16px;
-    }
-    .feature-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-    .feature-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
 
-    /* ─── PREMIUM ─── */
-    .premium {
-      padding: 80px 24px;
-      background: linear-gradient(135deg, var(--primary) 0%, #F5A87A 100%);
-      text-align: center;
+    /* Tile variants */
+    .tile.big-coral {
+      grid-column: span 3;
+      grid-row: span 2;
+      background: linear-gradient(160deg, var(--peach) 0%, var(--coral) 100%);
       color: #fff;
     }
-    .premium h2 { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
-    .premium p { font-size: 18px; opacity: 0.9; margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto; }
-    .price-tags {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 28px;
+    .tile.big-coral h3 { color: #fff; }
+    .tile.big-coral h3 .accent { color: var(--butter); }
+    .tile.big-coral p { color: rgba(255,255,255,0.92); font-size: 16px; }
+    .tile.big-coral .tile-tag { color: rgba(255,255,255,0.78); }
+
+    .tile.sage { grid-column: span 3; background: var(--sage-light); }
+    .tile.sage h3 .accent { color: var(--sage); }
+    .tile.lavender { grid-column: span 3; background: var(--lavender-lt); }
+    .tile.lavender h3 .accent { color: var(--lavender); }
+    .tile.cream { grid-column: span 2; background: var(--cream-dark); }
+    .tile.butter { grid-column: span 2; background: var(--butter); }
+    .tile.butter .tile-tag { color: #7A5E2E; }
+    .tile.ocean { grid-column: span 2; background: var(--sky-light); }
+    .tile.ocean h3 .accent { color: var(--sky); }
+    .tile.rose { grid-column: span 3; background: #F2E1EC; }
+    .tile.rose h3 .accent { color: var(--rose); }
+
+    /* Hero tile big stat */
+    .hero-stat {
+      font-family: var(--font-accent);
+      font-style: italic;
+      font-size: 88px;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      color: #fff;
+      margin: 18px 0 10px;
     }
-    .price-tag {
-      display: inline-block;
-      background: rgba(255,255,255,0.2);
-      backdrop-filter: blur(10px);
-      padding: 20px 32px;
-      border-radius: 20px;
+    .hero-stat .unit {
+      font-family: var(--font-body);
+      font-style: normal;
+      font-size: 18px;
+      font-weight: 600;
+      opacity: 0.9;
+      margin-left: 4px;
+    }
+
+    /* ─── SECTION HEADER ─── */
+    .section-title {
+      max-width: 800px;
+      margin: 0 auto 56px;
+      padding: 0 32px;
+      text-align: center;
+    }
+    .section-title .eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 14px;
+    }
+    .section-title h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(34px, 4.8vw, 60px);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+    .section-title h2 .accent {
+      font-family: var(--font-accent);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--coral);
+    }
+    .section-title p {
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+
+    /* ─── PREMIUM ─── */
+    .premium-wrap {
+      padding: 40px 32px 100px;
+    }
+    .premium {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 48px;
+      background: linear-gradient(135deg, var(--peach) 0%, var(--coral) 55%, var(--lavender) 100%);
+      border-radius: 40px;
+      text-align: center;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .premium::before {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,229,168,0.4) 0%, transparent 70%);
+      top: -20%;
+      right: -10%;
+      border-radius: 50%;
+    }
+    .premium .eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 14px;
       position: relative;
     }
+    .premium h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 60px);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+      position: relative;
+    }
+    .premium h2 .script {
+      font-family: var(--font-accent);
+      font-style: italic;
+      color: var(--butter);
+      font-weight: 400;
+    }
+    .premium > p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.92);
+      max-width: 540px;
+      margin: 0 auto 44px;
+      position: relative;
+      line-height: 1.55;
+    }
+    .price-tags {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+      position: relative;
+    }
+    .price-tag {
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 22px 36px;
+      border-radius: 22px;
+      position: relative;
+      min-width: 200px;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
     .price-tag.popular {
-      background: rgba(255,255,255,0.35);
-      border: 2px solid rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.32);
+      border: 2px solid rgba(255,255,255,0.55);
     }
     .price-tag .badge {
       position: absolute;
@@ -254,309 +535,444 @@
       left: 50%;
       transform: translateX(-50%);
       background: #fff;
-      color: var(--primary);
+      color: var(--coral-dark);
       font-size: 11px;
       font-weight: 800;
-      padding: 3px 12px;
-      border-radius: 10px;
+      letter-spacing: .5px;
+      padding: 4px 14px;
+      border-radius: 12px;
       white-space: nowrap;
     }
-    .price-tag .amount { font-size: 36px; font-weight: 800; }
-    .price-tag .period { font-size: 15px; opacity: 0.8; }
-    .price-tag .save { display: block; font-size: 13px; opacity: 0.85; margin-top: 4px; font-weight: 700; }
+    .price-tag .amount { font-size: 36px; font-weight: 800; display: block; }
+    .price-tag .period { font-size: 15px; opacity: 0.85; }
+    .price-tag .save { display: block; font-size: 13px; opacity: 0.92; margin-top: 6px; font-weight: 700; }
+
     .premium-features {
       display: flex;
-      gap: 32px;
+      gap: 28px;
       justify-content: center;
       flex-wrap: wrap;
-      margin-bottom: 36px;
+      margin-bottom: 38px;
+      position: relative;
     }
     .premium-feature {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 16px;
-      font-weight: 600;
-    }
-    .btn-white {
-      background: #fff;
-      color: var(--primary);
-      padding: 14px 36px;
-      border-radius: 28px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 16px;
-      transition: all 0.2s;
-      display: inline-block;
-    }
-    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
-
-    /* ─── LEGAL PAGES ─── */
-    .legal {
-      padding: 80px 24px;
-      max-width: 780px;
-      margin: 0 auto;
-    }
-    .legal h2 {
-      font-size: 28px;
-      font-weight: 800;
-      margin-bottom: 8px;
-      color: var(--primary);
-    }
-    .legal-intro {
-      font-size: 16px;
-      color: var(--text-secondary);
-      margin-bottom: 32px;
-    }
-    .legal h3 {
-      font-size: 17px;
-      font-weight: 700;
-      margin: 28px 0 8px;
-      color: var(--text);
-    }
-    .legal p, .legal li {
-      font-size: 15px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      margin-bottom: 8px;
-    }
-    .legal ul { padding-left: 20px; margin-bottom: 12px; }
-    .legal-divider {
-      height: 2px;
-      background: linear-gradient(90deg, var(--primary), transparent);
-      margin: 60px 0;
-      border: none;
-    }
-
-    /* ─── SUPPORT ─── */
-    .support-section {
-      padding: 80px 24px;
-      background: var(--cream-dark);
-      text-align: center;
-    }
-    .support-card {
-      max-width: 500px;
-      margin: 0 auto;
-      background: var(--surface);
-      border-radius: 24px;
-      padding: 40px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-    }
-    .support-card h2 { font-size: 28px; font-weight: 800; margin-bottom: 12px; }
-    .support-card p { font-size: 16px; color: var(--text-secondary); margin-bottom: 20px; }
-    .support-email {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--orange-light);
-      color: var(--primary);
-      padding: 12px 24px;
-      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .premium-feature::before {
+      content: '✓';
+      width: 22px; height: 22px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      color: var(--coral-dark);
+      padding: 16px 36px;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 16px;
+      text-decoration: none;
+      transition: all .25s;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(0,0,0,0.2); }
+
+    /* ─── SUPPORT ─── */
+    .support {
+      padding: 80px 32px 100px;
+    }
+    .support-card {
+      max-width: 560px;
+      margin: 0 auto;
+      background: var(--surface);
+      border-radius: 28px;
+      padding: 48px 40px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(138,124,107,0.10);
+    }
+    .support-card h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 36px;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+    .support-card p {
+      font-size: 16px;
+      color: var(--ink-soft);
+      margin-bottom: 24px;
+      line-height: 1.55;
+    }
+    .support-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--peach-light);
+      color: var(--coral-dark);
+      padding: 14px 26px;
+      border-radius: 100px;
       text-decoration: none;
       font-weight: 700;
       font-size: 16px;
-      transition: all 0.2s;
+      transition: all .2s;
     }
-    .support-email:hover { background: var(--primary); color: #fff; }
+    .support-email:hover { background: var(--coral); color: #fff; }
+    .support-note {
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--graphite);
+    }
 
     /* ─── FOOTER ─── */
     footer {
-      padding: 40px 24px;
-      text-align: center;
-      border-top: 1px solid rgba(0,0,0,0.06);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 32px 32px;
+      display: grid;
+      grid-template-columns: 3fr 2fr 2fr 2fr;
+      gap: 60px;
+      border-top: 1px solid var(--border);
     }
-    .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
-    .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 600; }
-    .footer-links a:hover { color: var(--primary); }
-    .footer-copy { font-size: 13px; color: var(--text-light); }
-
-    /* ─── MOBILE ─── */
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hero { padding: 110px 20px 60px; }
-      .hero h1 { font-size: 32px; }
-      .hero p { font-size: 16px; }
-      .features-grid { grid-template-columns: 1fr; }
-      .screenshot-item { width: 180px; }
-      .premium-features { flex-direction: column; align-items: center; }
+    .footer-brand .wordmark { font-size: 30px; display: block; margin-bottom: 12px; }
+    .footer-brand p {
+      font-size: 14px;
+      color: var(--graphite);
+      max-width: 280px;
+      line-height: 1.55;
+    }
+    .footer-col h4 {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--pencil);
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .footer-col ul { list-style: none; padding: 0; }
+    .footer-col li { margin-bottom: 10px; }
+    .footer-col a {
+      font-size: 14px;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color .2s;
+    }
+    .footer-col a:hover { color: var(--coral); }
+    .colophon {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 22px 32px 32px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--graphite);
     }
 
-    /* ─── HAMBURGER MENU ─── */
-    .menu-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
-    .menu-toggle span { display: block; width: 24px; height: 2px; background: var(--text); margin: 6px 0; border-radius: 2px; transition: 0.3s; }
-    @media (max-width: 768px) {
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 14px 20px; }
+      .nav-links a:not(.btn-nav) { display: none; }
+      .nav-links { gap: 12px; }
       .menu-toggle { display: block; }
-      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--cream); padding: 20px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+      .nav-mobile-open .nav-links a:not(.btn-nav) {
+        display: block;
+        position: absolute;
+        background: var(--cream);
+      }
+      .hero { padding: 110px 20px 40px; min-height: auto; }
+      .hero-illo { display: none; }
+      .showcase-track { gap: 16px; padding: 12px 20px 30px; }
+      .showcase-track::before, .showcase-track::after { flex: 0 0 4px; }
+      .shot { width: 230px; border-radius: 28px; }
+      .bento {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        padding: 0 20px;
+      }
+      .tile { padding: 24px; }
+      .tile.big-coral, .tile.sage, .tile.lavender,
+      .tile.cream, .tile.butter, .tile.ocean, .tile.rose {
+        grid-column: span 2;
+        grid-row: auto;
+      }
+      .tile h3 { font-size: 24px; }
+      .hero-stat { font-size: 64px; }
+      .premium-wrap { padding: 20px 20px 60px; }
+      .premium { padding: 60px 24px; border-radius: 28px; }
+      .price-tag { padding: 18px 24px; min-width: 180px; }
+      .premium-features { gap: 14px; flex-direction: column; align-items: center; }
+      .support { padding: 40px 20px 60px; }
+      .support-card { padding: 36px 24px; }
+      .support-card h2 { font-size: 28px; }
+      footer { grid-template-columns: 1fr; gap: 32px; padding: 40px 20px; }
+      .colophon { flex-direction: column; gap: 8px; padding: 20px; text-align: center; }
     }
+
+    /* ─── Entry animations ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-badge, .hero h1, .hero-lede, .hero-ctas {
+      animation: fadeUp 1s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .hero h1    { animation-delay: .15s; }
+    .hero-lede  { animation-delay: .35s; }
+    .hero-ctas  { animation-delay: .55s; }
   </style>
 </head>
 <body>
 
-  <!-- ═══ NAVIGATION ═══ -->
+  <!-- Soft sunrise atmosphere blobs -->
+  <div class="atmosphere">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
   <nav>
     <div class="nav-inner">
-      <a href="#" class="logo">TinyMinds</a>
-      <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+      <a href="#" class="wordmark">TinyMinds</a>
+      <button class="menu-toggle" aria-label="Menü öffnen" onclick="document.body.classList.toggle('nav-mobile-open')">
         <span></span><span></span><span></span>
       </button>
       <div class="nav-links">
         <a href="#features">Features</a>
-        <a href="#premium-section">Premium</a>
-        <a href="#support-section">Support</a>
+        <a href="#premium">Premium</a>
+        <a href="#support">Support</a>
         <a href="https://apps.apple.com/app/tinyminds/id6761198383" class="btn-nav">App laden</a>
       </div>
     </div>
   </nav>
 
-  <!-- ═══ HERO ═══ -->
-  <section class="hero">
-    <div class="hero-badge">Neu: KI-Elternberatung</div>
-    <h1>Die ersten Jahre.<br><span>Gemeinsam gemeistert.</span></h1>
-    <p>TinyMinds begleitet dich mit KI-Chat, Tracker, Meilensteinen und Expertenempfehlungen durch den Elternalltag.</p>
-    <div class="hero-buttons">
-      <a href="https://apps.apple.com/app/tinyminds/id6761198383" class="btn-primary">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-        App Store
-      </a>
-      <a href="#features" class="btn-secondary">Mehr erfahren</a>
-    </div>
-  </section>
+  <main>
 
-  <!-- ═══ SCREENSHOTS ═══ -->
-  <section class="screenshots">
-    <div class="screenshots-track">
-      <div class="screenshot-item">
-        <img src="screenshots/home.jpg" alt="TinyMinds Zuhause" loading="lazy">
-        <div class="screenshot-label">Zuhause</div>
-      </div>
-      <div class="screenshot-item">
-        <img src="screenshots/sleep.jpg" alt="TinyMinds Schlaf-Tracker" loading="lazy">
-        <div class="screenshot-label">Schlaf-Tracker</div>
-      </div>
-      <div class="screenshot-item">
-        <img src="screenshots/chat.jpg" alt="TinyMinds KI-Chat Mia" loading="lazy">
-        <div class="screenshot-label">KI-Chat Mia</div>
-      </div>
-      <div class="screenshot-item">
-        <img src="screenshots/milestones.jpg" alt="TinyMinds Meilensteine" loading="lazy">
-        <div class="screenshot-label">Meilensteine</div>
-      </div>
-      <div class="screenshot-item">
-        <img src="screenshots/growth.jpg" alt="TinyMinds Wachstum WHO-Perzentilen" loading="lazy">
-        <div class="screenshot-label">Wachstum</div>
-      </div>
-      <div class="screenshot-item">
-        <img src="screenshots/leaps.jpg" alt="TinyMinds Entwicklungssprünge" loading="lazy">
-        <div class="screenshot-label">Entwicklungssprünge</div>
-      </div>
-      <div class="screenshot-item">
-        <img src="screenshots/coparenting.jpg" alt="TinyMinds Co-Eltern" loading="lazy">
-        <div class="screenshot-label">Co-Eltern</div>
-      </div>
-    </div>
-  </section>
+    <!-- ─────── HERO ─────── -->
+    <section class="hero">
+      <span class="hero-badge">Endlich wieder Morgenlicht</span>
 
-  <!-- ═══ FEATURES ═══ -->
-  <section class="features" id="features">
-    <h2 class="section-title">Alles was Eltern brauchen</h2>
-    <p class="section-subtitle">Eine App statt zehn. TinyMinds vereint alles in einer wunderschönen Oberfläche.</p>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon" style="background: rgba(232,129,110,0.12);">💬</div>
-        <h3>KI-Chat Mia</h3>
-        <p>Deine persönliche Elternberatung — rund um die Uhr. Frag Mia alles zu Schlaf, Ernährung, Entwicklung und Erziehung.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon" style="background: rgba(123,198,126,0.12);">😴</div>
-        <h3>Schlaf-Tracker</h3>
-        <p>Schlafzeiten einfach dokumentieren. Erkenne Muster und optimiere die Schlafroutine deines Kindes.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon" style="background: rgba(100,149,237,0.12);">🍼</div>
-        <h3>Ernährung & Stillen</h3>
-        <p>Mahlzeiten, Stillzeiten und Fläschchen tracken. Alles auf einen Blick.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon" style="background: rgba(255,183,77,0.12);">📏</div>
-        <h3>Wachstum & WHO-Perzentilen</h3>
-        <p>Gewicht und Größe dokumentieren. Vergleich mit WHO-Wachstumskurven inklusive.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon" style="background: rgba(186,104,200,0.12);">⭐</div>
-        <h3>100+ Meilensteine</h3>
-        <p>Motorik, Sprache, Soziales und Kognition — von 0 bis 36 Monate. Halte jeden Moment fest.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon" style="background: rgba(77,182,172,0.12);">🏥</div>
-        <h3>U-Untersuchungen & Impfplan</h3>
-        <p>Alle U1–U9 Termine mit Checklisten. Impfkalender nach STIKO 2024 Empfehlung.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon" style="background: rgba(255,138,101,0.12);">📊</div>
-        <h3>Wöchentliche Berichte</h3>
-        <p>Schlafanalysen, Essensübersichten und Wachstumstrends. KI-gestützte Empfehlungen mit Premium.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon" style="background: rgba(129,199,132,0.12);">👨‍👩‍👧</div>
-        <h3>Co-Eltern</h3>
-        <p>Teile alle Daten mit deinem Partner. Einfach per Einladungscode verbinden.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon" style="background: rgba(149,117,205,0.12);">👶</div>
-        <h3>Mehrere Kinder</h3>
-        <p>Geschwister einfach verwalten. Ein Tipp wechselt zwischen den Profilen.</p>
-      </div>
-    </div>
-  </section>
+      <h1>
+        Ein sonniger Platz<br/>
+        für das <span class="script">kleine</span> Chaos.
+      </h1>
 
-  <!-- ═══ PREMIUM ═══ -->
-  <section class="premium" id="premium-section">
-    <h2>TinyMinds Premium ✨</h2>
-    <p>Hol das Beste aus TinyMinds heraus. Unbegrenzt, persönlich, intelligent.</p>
-    <div class="price-tags">
-      <div class="price-tag">
-        <span class="amount">4,99€</span>
-        <span class="period">/Monat</span>
+      <p class="hero-lede">
+        TinyMinds ist dein warmer Begleiter für die ersten Jahre.
+        Schlaf, Mahlzeiten, Meilensteine — und Mia, die KI-Begleiterin,
+        die nie schläft, wenn du es mal nicht schaffst.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="https://apps.apple.com/app/tinyminds/id6761198383" class="btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          Im App Store laden
+        </a>
+        <a href="#features" class="btn-ghost">Was drin ist</a>
       </div>
-      <div class="price-tag popular">
-        <span class="badge">Spare 33%</span>
-        <span class="amount">39,99€</span>
-        <span class="period">/Jahr</span>
-        <span class="save">nur 3,33€/Monat</span>
+
+      <!-- Floating illustrations -->
+      <svg class="hero-illo sun" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="20" fill="#FFB894"/>
+        <g stroke="#EE7F5F" stroke-width="3" stroke-linecap="round">
+          <line x1="50" y1="10" x2="50" y2="20"/>
+          <line x1="50" y1="80" x2="50" y2="90"/>
+          <line x1="10" y1="50" x2="20" y2="50"/>
+          <line x1="80" y1="50" x2="90" y2="50"/>
+          <line x1="22" y1="22" x2="29" y2="29"/>
+          <line x1="71" y1="71" x2="78" y2="78"/>
+          <line x1="78" y1="22" x2="71" y2="29"/>
+          <line x1="22" y1="78" x2="29" y2="71"/>
+        </g>
+      </svg>
+      <svg class="hero-illo cloud" viewBox="0 0 100 50" fill="#FFFFFF" stroke="#B4A3DE" stroke-width="2">
+        <ellipse cx="30" cy="30" rx="18" ry="14"/>
+        <ellipse cx="55" cy="25" rx="22" ry="18"/>
+        <ellipse cx="78" cy="32" rx="16" ry="12"/>
+      </svg>
+      <svg class="hero-illo heart" viewBox="0 0 50 50" fill="#EE7F5F">
+        <path d="M25 42 C-5 25 5 5 25 18 C45 5 55 25 25 42Z"/>
+      </svg>
+      <svg class="hero-illo sparkle" viewBox="0 0 30 30" fill="none" stroke="#EE7F5F" stroke-width="2" stroke-linecap="round">
+        <path d="M15 3v8M15 19v8M3 15h8M19 15h8"/>
+        <circle cx="15" cy="15" r="2" fill="#EE7F5F"/>
+      </svg>
+    </section>
+
+    <!-- ─────── SCREENSHOTS SHOWCASE ─────── -->
+    <section class="showcase" aria-label="App Screenshots">
+      <div class="showcase-track">
+        <div class="shot"><img src="screenshots/1_home.png" alt="TinyMinds Zuhause-Bildschirm — KI-Begleiter für die ersten Jahre" loading="lazy"></div>
+        <div class="shot"><img src="screenshots/2_mia.png" alt="Mia — die KI, die mit Wärme antwortet" loading="lazy"></div>
+        <div class="shot"><img src="screenshots/3_tracker.png" alt="Tracker — Schlaf, Essen, Windeln, Wachstum" loading="lazy"></div>
+        <div class="shot"><img src="screenshots/4_leaps.png" alt="10 Entwicklungssprünge verstehen" loading="lazy"></div>
+        <div class="shot"><img src="screenshots/5_milestones.png" alt="50 Meilensteine zum Feiern" loading="lazy"></div>
+        <div class="shot"><img src="screenshots/6_family.png" alt="Co-Eltern — Gemeinsam in Echtzeit" loading="lazy"></div>
       </div>
-    </div>
-    <div class="premium-features">
-      <div class="premium-feature">✅ Unbegrenzter KI-Chat</div>
-      <div class="premium-feature">✅ Personalisierte Berichte</div>
-      <div class="premium-feature">✅ Alle Features</div>
-    </div>
-    <a href="https://apps.apple.com/app/tinyminds/id6761198383" class="btn-white">Jetzt Premium starten</a>
-  </section>
+    </section>
 
+    <!-- ─────── BENTO FEATURES ─────── -->
+    <section id="features">
+      <div class="section-title">
+        <div class="eyebrow">Alles was Eltern brauchen</div>
+        <h2>Eine App statt <span class="accent">zehn</span>.</h2>
+        <p>Schlaf, Ernährung, Wachstum, Meilensteine, Mia und Co-Eltern — alles an einem ruhigen, schönen Ort.</p>
+      </div>
 
-  <!-- ═══ SUPPORT ═══ -->
-  <section class="support-section" id="support-section">
-    <div class="support-card">
-      <h2>Support</h2>
-      <p>Brauchst du Hilfe oder hast eine Frage? Wir sind für dich da.</p>
-      <a href="mailto:hello@tiny-minds.de" class="support-email">
-        ✉️ hello@tiny-minds.de
-      </a>
-      <p style="margin-top:16px; font-size:14px; color:var(--text-light)">Wir antworten in der Regel innerhalb von 24 Stunden.</p>
-    </div>
-  </section>
+      <div class="bento">
+        <!-- Big coral hero tile: sleep -->
+        <div class="tile big-coral">
+          <div class="tile-tag">Schlaf · heute</div>
+          <h3>Ruhe, die sich <span class="accent">zeigt.</span></h3>
+          <div class="hero-stat">11h 20<span class="unit">min</span></div>
+          <p>Ein sanfter Kreis zeigt dir, wie dein Kind letzte Nacht geschlafen hat. Muster werden über Wochen sichtbar — ohne Diagrammwald.</p>
+        </div>
 
-  <!-- ═══ FOOTER ═══ -->
+        <!-- Sage tile: nutrition -->
+        <div class="tile sage">
+          <div class="tile-tag">Ernährung</div>
+          <h3>Jede <span class="accent">Mahlzeit</span>, freundlich festgehalten.</h3>
+          <p>Stillen, Flasche, Brei — mit Zeit, Dauer und Menge. Einhändig eintragen, auch um drei Uhr nachts.</p>
+        </div>
+
+        <!-- Lavender tile: Mia -->
+        <div class="tile lavender">
+          <div class="tile-tag">Mia · KI-Begleiterin</div>
+          <h3>Eine leise <span class="accent">Stimme</span> um drei Uhr morgens.</h3>
+          <p>Mia kennt deine Tracker-Daten und antwortet auf die kleinen Fragen des Elternalltags. Keine Ärztin — eine ruhige Freundin.</p>
+        </div>
+
+        <!-- Cream: milestones -->
+        <div class="tile cream">
+          <div class="tile-tag">Meilensteine</div>
+          <h3>50 kleine <span class="accent">Wunder</span>.</h3>
+          <p>Erstes Lächeln, erste Schritte, erstes Wort — mit Foto und Datum.</p>
+        </div>
+
+        <!-- Butter: growth -->
+        <div class="tile butter">
+          <div class="tile-tag">Wachstum</div>
+          <h3>Ruhige <span class="accent">Linie</span> im Buch.</h3>
+          <p>Gewicht und Größe, WHO-Perzentilen. Keine Ängste — nur Orientierung.</p>
+        </div>
+
+        <!-- Ocean: leaps -->
+        <div class="tile ocean">
+          <div class="tile-tag">Sprünge</div>
+          <h3>10 <span class="accent">Sprünge</span> verstehen.</h3>
+          <p>Wisse, was gerade passiert — und warum dein Kind unruhig ist.</p>
+        </div>
+
+        <!-- Rose: co-parenting -->
+        <div class="tile rose">
+          <div class="tile-tag">Co-Eltern</div>
+          <h3>Gemeinsam Eltern. <span class="accent">In Echtzeit.</span></h3>
+          <p>Teile alle Tracker-Daten live mit deinem Partner. Ein Premium-Plan, bis zu drei Elternteile. Schluss mit „Hast du sie schon gefüttert?“</p>
+        </div>
+
+        <!-- Sage: U-Untersuchungen -->
+        <div class="tile sage" style="grid-column: span 3;">
+          <div class="tile-tag">Vorsorge & Impfen</div>
+          <h3>U-Termine & <span class="accent">STIKO 2024</span> auf einen Blick.</h3>
+          <p>Alle U1–U9 mit Checklisten. Impfkalender nach aktueller STIKO-Empfehlung — damit du nichts vergisst.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────── PREMIUM ─────── -->
+    <section class="premium-wrap" id="premium">
+      <div class="premium">
+        <div class="eyebrow">TinyMinds Premium</div>
+        <h2>Hol das <span class="script">Beste</span> aus TinyMinds heraus.</h2>
+        <p>Unbegrenzter KI-Chat, persönliche Wochenberichte und alle Features — ein Plan für die ganze Familie.</p>
+
+        <div class="price-tags">
+          <div class="price-tag">
+            <span class="amount">4,99 €</span>
+            <span class="period">/Monat</span>
+          </div>
+          <div class="price-tag popular">
+            <span class="badge">Spare 33 %</span>
+            <span class="amount">39,99 €</span>
+            <span class="period">/Jahr</span>
+            <span class="save">nur 3,33 €/Monat</span>
+          </div>
+        </div>
+
+        <div class="premium-features">
+          <div class="premium-feature">Unbegrenzter Mia-Chat</div>
+          <div class="premium-feature">Wöchentliche Berichte</div>
+          <div class="premium-feature">Alle Features inklusive</div>
+        </div>
+
+        <a href="https://apps.apple.com/app/tinyminds/id6761198383" class="btn-white">
+          Premium starten
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ─────── SUPPORT ─────── -->
+    <section class="support" id="support">
+      <div class="support-card">
+        <h2>Da, wenn du uns brauchst.</h2>
+        <p>Eine Frage, ein Bug, ein Vorschlag? Wir lesen jede Mail persönlich und antworten meist innerhalb von 24 Stunden.</p>
+        <a href="mailto:hello@tiny-minds.de" class="support-email">
+          ✉ hello@tiny-minds.de
+        </a>
+        <p class="support-note">Made with ☀️ in Frankfurt · Bern · Wien</p>
+      </div>
+    </section>
+
+  </main>
+
   <footer>
-    <div class="footer-links">
-      <a href="/datenschutz.html">Datenschutz</a>
-      <a href="/nutzungsbedingungen.html">Nutzungsbedingungen</a>
-      <a href="/impressum.html">Impressum</a>
-      <a href="#support-section">Support</a>
+    <div class="footer-brand">
+      <span class="wordmark">TinyMinds</span>
+      <p>Warmer Begleiter für die ersten Jahre. Gemacht mit Liebe von Eltern, für Eltern.</p>
     </div>
-    <p class="footer-copy">© 2026 Dasc Interactive. Alle Rechte vorbehalten.</p>
-    <p style="font-size:12px; color:var(--text-light); margin-top:8px;">Stand: März 2026</p>
+    <div class="footer-col">
+      <h4>App</h4>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#premium">Premium</a></li>
+        <li><a href="https://apps.apple.com/app/tinyminds/id6761198383">App Store</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <ul>
+        <li><a href="/impressum.html">Impressum</a></li>
+        <li><a href="/datenschutz.html">Datenschutz</a></li>
+        <li><a href="/nutzungsbedingungen.html">AGB</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <ul>
+        <li><a href="mailto:hello@tiny-minds.de">hello@tiny-minds.de</a></li>
+        <li><a href="#support">Support</a></li>
+      </ul>
+    </div>
   </footer>
+
+  <div class="colophon">
+    <span>© 2026 Dasc Interactive · Alle Rechte vorbehalten</span>
+    <span>Stand: April 2026</span>
+  </div>
 
 </body>
 </html>
